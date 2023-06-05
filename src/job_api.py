@@ -3,6 +3,7 @@ import json
 
 
 class API:
+    '''Общий класс для API'''
     @staticmethod
     def filter_vacancies(vacancies):
         filtered_vacancies = '+'.join(vacancies)
@@ -10,6 +11,7 @@ class API:
 
 
 class HeadHunterAPI(API):
+    '''Класс для взаимодействия с API HH'''
     @staticmethod
     def get_vacancies(fvacancies, top):
         fvacancies = API.filter_vacancies(fvacancies)
@@ -28,6 +30,7 @@ class HeadHunterAPI(API):
 
 
 class SuperJobAPI(API):
+    '''Класс для взаимодействия с API SJ'''
     @staticmethod
     def get_vacancies(fvacancies, top):
         fvacancies = API.filter_vacancies(fvacancies)

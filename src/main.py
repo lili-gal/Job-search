@@ -1,7 +1,7 @@
 from job_api import SuperJobAPI, HeadHunterAPI, API
 from vacancy import Vacancy, JSONSaver
 
-
+'''Функция взаимодействия с пользователем через консоль'''
 def user_interaction():
     answer = input(
         'Выберите платформу с вакансиями\nВарианты:\n1. HeadHunter\n2. SuperJob\n3. Искать на всех платформах\n')

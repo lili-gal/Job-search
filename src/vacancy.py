@@ -2,6 +2,7 @@ import json
 
 
 class Vacancy:
+    '''Класс представляющий сущность - вакансия'''
     def __init__(self, name, link, salary, requirements):
         if name != '':
             self.name = name
@@ -20,6 +21,7 @@ class Vacancy:
         else:
             raise AttributeError('Неправильно заданы требования')
 
+    '''Перегрузка операторов сравнения класса'''
     def __lt__(self, other):
         return self.salary < other.salary
 
@@ -40,6 +42,7 @@ class Vacancy:
 
 
 class JSONSaver:
+    '''Класс для сохранения информации и взаимодействия с файлом в формате json '''
     @staticmethod
     def to_json(vacancy):
         data = {
@@ -65,6 +68,7 @@ class JSONSaver:
         with open('vacancies.json', 'w') as f:
             json.dump(data_r, f, ensure_ascii=False, indent=4)
 
+    '''Получение вакансии по названию'''
     @staticmethod
     def get_vacancy_by_name(name):
         with open('vacancies.json', 'r') as f:
@@ -74,6 +78,7 @@ class JSONSaver:
             if i['name'] == name:
                 print(f"{i['name']}, {i['link']}, {i['salary']}, {i['requirements']}")
 
+    '''Удаление вакансии'''
     @staticmethod
     def delete_vacancy(vacancy):
         data = {
