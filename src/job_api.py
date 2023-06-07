@@ -1,8 +1,11 @@
 import requests
 import json
+import vacancy
+from vacancy import Vacancy, JSONSaver
 
 
 class API:
+    '''Общий класс для API'''
     @staticmethod
     def filter_vacancies(vacancies):
         filtered_vacancies = '+'.join(vacancies)
@@ -10,6 +13,7 @@ class API:
 
 
 class HeadHunterAPI(API):
+    '''Класс для взаимодействия с API HH'''
     @staticmethod
     def get_vacancies(fvacancies, top):
         fvacancies = API.filter_vacancies(fvacancies)
@@ -24,10 +28,16 @@ class HeadHunterAPI(API):
             elif len(vacancies['items']) - 1 < i:
                 break
             else:
+                vacancy = Vacancy(vacancies["items"][i]['name'],
+                                  vacancies["items"][i]['alternate_url'],
+                                  f'{vacancies["items"][i]["salary"]["from"]}-{vacancies["items"][i]["salary"]["to"]} {vacancies["items"][i]["salary"]["currency"]}.',
+                                  vacancies["items"][i]["snippet"]["requirement"])
+                JSONSaver.to_json(vacancy)
                 print(f'{vacancies["items"][i]}')
 
 
 class SuperJobAPI(API):
+    '''Класс для взаимодействия с API SJ'''
     @staticmethod
     def get_vacancies(fvacancies, top):
         fvacancies = API.filter_vacancies(fvacancies)
@@ -42,4 +52,9 @@ class SuperJobAPI(API):
             elif len(vacancies['objects'])-1 < i:
                 break
             else:
+                vacancy = Vacancy(vacancies["objects"][i]['profession'],
+                                  vacancies["objects"][i]['link'],
+                                  f'{vacancies["objects"][i]["payment_from"]}-{vacancies["objects"][i]["payment_to"]} {vacancies["objects"][i]["currency"]}.',
+                                  vacancies["objects"][i]["candidat"])
+                JSONSaver.to_json(vacancy)
                 print(f'{vacancies["objects"][i]}')
